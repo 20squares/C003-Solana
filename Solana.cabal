@@ -1,0 +1,99 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           Solana
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/20squares/Solana>
+homepage:       https://github.com/20squares/Solana#readme
+bug-reports:    https://github.com/20squares/Solana/issues
+author:         20squares UG
+maintainer:     philipp@20squares.xyz
+copyright:      2023 20squares UG
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/20squares/Solana
+
+library
+  exposed-modules:
+      ActionSpaces
+      Analytics
+      Components
+      Model
+      Parameterization
+      Payoffs
+      Strategies
+      SupportFunctions
+      Types
+  other-modules:
+      Paths_Solana
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , containers
+    , crem
+    , extra
+    , mtl
+    , open-games-hs
+    , optics
+    , optics-core
+    , probability
+    , unordered-containers
+  default-language: Haskell2010
+
+executable blockswap-PoN-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_Solana
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      Solana
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , crem
+    , extra
+    , mtl
+    , open-games-hs
+    , optics
+    , optics-core
+    , probability
+    , unordered-containers
+  default-language: Haskell2010
+
+test-suite blockswap-PoN-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_Solana
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      Solana
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , crem
+    , extra
+    , mtl
+    , open-games-hs
+    , optics
+    , optics-core
+    , probability
+    , unordered-containers
+  default-language: Haskell2010

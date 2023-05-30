@@ -1,0 +1,21 @@
+# Resolver to choose a 'specific' stackage snapshot or a compiler version.
+# A snapshot resolver dictates the compiler version and the set of packages
+# to be used for project dependencies. For example:
+#
+resolver: lts-20.20
+
+# User packages to be built.
+# Various formats can be used as shown in the example below.
+#
+packages:
+- .
+
+# Dependency packages to be pulled from upstream that are not in the resolver.
+# These entries can reference officially published versions as well as
+# forks / in-progress versions pinned to a git hash. For example:
+#
+extra-deps:
+ - git: https://github.com/philipp-zahn/open-games-engine.git
+   commit: 7bb9aa8d29ae2fac8bd2823ebb86117dbc967431
+ - git: https://github.com/marcosh/crem.git
+   commit: 47686a11bf0135d2f22aba0692ebe6d12a42530f

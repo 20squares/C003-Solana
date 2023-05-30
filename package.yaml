@@ -1,0 +1,62 @@
+name:                "Solana"
+version:             0.1.0.0
+github:              "20squares/Solana"
+license:             "MIT"
+author:              "20squares UG"
+maintainer:          "philipp@20squares.xyz"
+copyright:           "2023 20squares UG"
+
+extra-source-files:
+- README.md
+- CHANGELOG.md
+
+description:         Please see the README on GitHub at <https://github.com/20squares/Solana>
+
+dependencies:
+- base >= 4.7 && < 5
+- bytestring
+- containers
+- crem
+- extra
+- mtl
+- open-games-hs
+- optics
+- optics-core
+- probability
+- unordered-containers
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+
+library:
+  source-dirs: src
+
+executables:
+  blockswap-PoN-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - Solana
+
+tests:
+  blockswap-PoN-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - Solana
