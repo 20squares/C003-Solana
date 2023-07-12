@@ -270,8 +270,7 @@ getFee pool assetName assetQuantity baseFee =
                )
         EQ -> currentRatio /= target
       ratioFee =
-        1
-          + ratioFee
+        1 + ratioMult
             * ( if newRatio < target
                   then (target - newRatio) / (target - minRatio tokenRatio)
                   else (newRatio - target) / (maxRatio tokenRatio - target)
