@@ -1,16 +1,12 @@
-{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE TemplateHaskell #-}
 
-
-module Components
-  where
-
-import SupportFunctions
+module Components where
 
 import OpenGames.Engine.Engine
 import OpenGames.Preprocessor
-
+import SupportFunctions
 
 {-
 Describes the basic available actions for actors in the market
@@ -20,7 +16,8 @@ Describes the basic available actions for actors in the market
 -- Pool operations
 
 -- Add liquidity
-addLiquidity name actionSpace = [opengame|
+addLiquidity name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -40,7 +37,8 @@ addLiquidity name actionSpace = [opengame|
   |]
 
 -- Remove liquidity
-removeLiquidity name actionSpace = [opengame|
+removeLiquidity name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -60,7 +58,8 @@ removeLiquidity name actionSpace = [opengame|
   |]
 
 -- Remove liquidity
-swap name actionSpace = [opengame|
+swap name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -78,13 +77,13 @@ swap name actionSpace = [opengame|
     outputs   :  swapped ;
     returns   :  payments ;
   |]
-
 
 ---------------------
 -- Trading operations
 
 -- Open position
-openPosition name actionSpace = [opengame|
+openPosition name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -103,9 +102,9 @@ openPosition name actionSpace = [opengame|
     returns   :  payments ;
   |]
 
-
 -- Close position
-closePosition name actionSpace = [opengame|
+closePosition name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -125,7 +124,8 @@ closePosition name actionSpace = [opengame|
   |]
 
 -- Add collateral
-addCollateral name actionSpace = [opengame|
+addCollateral name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -144,8 +144,9 @@ addCollateral name actionSpace = [opengame|
     returns   :  payments ;
   |]
 
- -- Remove collateral
-removeCollateral name actionSpace = [opengame|
+-- Remove collateral
+removeCollateral name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -164,8 +165,9 @@ removeCollateral name actionSpace = [opengame|
     returns   :  payments ;
   |]
 
- -- Liquidate position
-liquidatePosition name actionSpace = [opengame|
+-- Liquidate position
+liquidatePosition name actionSpace =
+  [opengame|
 
     inputs    :  state ;
     feedback  :   ;
@@ -188,7 +190,8 @@ liquidatePosition name actionSpace = [opengame|
 -- General state operations
 
 -- Update state
-updateState name stateUpdateMechanism = [opengame|
+updateState name stateUpdateMechanism =
+  [opengame|
 
     inputs    :  state, action ;
     feedback  :   ;
@@ -206,4 +209,3 @@ updateState name stateUpdateMechanism = [opengame|
     outputs   :  newState ;
     returns   :   ;
   |]
-

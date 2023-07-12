@@ -1,10 +1,8 @@
-module Parameterization
-  where
+module Parameterization where
 
 import Model
-import Types
-
 import OpenGames.Engine.Engine
+import Types
 
 {-
 Defines the main parameterizations used in the analysis

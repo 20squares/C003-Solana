@@ -1,11 +1,9 @@
-module Strategies
-  where
+module Strategies where
 
+import OpenGames.Engine.Engine
 import Payoffs
 import SupportFunctions
 import Types
-
-import OpenGames.Engine.Engine
 
 {-
 Defines the strategies

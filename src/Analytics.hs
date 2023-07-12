@@ -1,14 +1,12 @@
-module Analytics
-   where
+module Analytics where
 
 import ActionSpaces
 import Model
+import OpenGames.Engine.Engine hiding (Payoff)
+import OpenGames.Preprocessor
 import Payoffs
 import SupportFunctions
 import Types
-
-import OpenGames.Engine.Engine hiding (Payoff)
-import OpenGames.Preprocessor
 
 {-
 Contains the basic analytics to be executed
