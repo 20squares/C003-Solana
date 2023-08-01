@@ -16,7 +16,7 @@ Describes the basic available actions for actors in the market
 -- Pool operations
 
 -- Add liquidity
-addLiquidity name actionSpace =
+addLiquidityGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -37,7 +37,7 @@ addLiquidity name actionSpace =
   |]
 
 -- Remove liquidity
-removeLiquidity name actionSpace =
+removeLiquidityGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -58,7 +58,7 @@ removeLiquidity name actionSpace =
   |]
 
 -- Remove liquidity
-swap name actionSpace =
+swapGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -82,7 +82,7 @@ swap name actionSpace =
 -- Trading operations
 
 -- Open position
-openPosition name actionSpace =
+openPositionGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -103,7 +103,7 @@ openPosition name actionSpace =
   |]
 
 -- Close position
-closePosition name actionSpace =
+closePositionGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -124,7 +124,7 @@ closePosition name actionSpace =
   |]
 
 -- Add collateral
-addCollateral name actionSpace =
+addCollateralGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -145,7 +145,7 @@ addCollateral name actionSpace =
   |]
 
 -- Remove collateral
-removeCollateral name actionSpace =
+removeCollateralGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -166,7 +166,7 @@ removeCollateral name actionSpace =
   |]
 
 -- Liquidate position
-liquidatePosition name actionSpace =
+liquidatePositionGame name actionSpace =
   [opengame|
 
     inputs    :  state ;
@@ -190,7 +190,7 @@ liquidatePosition name actionSpace =
 -- General state operations
 
 -- Update state
-updateState name stateUpdateMechanism =
+updateStateGame name stateUpdateMechanism =
   [opengame|
 
     inputs    :  state, action ;
