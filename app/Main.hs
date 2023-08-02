@@ -1,3 +1,8 @@
 module Main where
 
-main = undefined
+import Analytics
+
+testStrategy = strategyTuple x y
+
+
+main = equilibriumExampleAddRemoveLiquidity state name actionSpaceAdd actionSpaceRemove testStrategy
