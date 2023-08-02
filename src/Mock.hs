@@ -86,12 +86,15 @@ state1 :: State
 state1 =
   State
     { accounts = fromList [("Aki", aki), ("Bogdan", bogdan), ("Candice", candice)],
-      pools = fromList [("Test", test), ("Test2", test2)]
+      pools = fromList [("Test", test), ("Test2", test2)],
+      externalPriceIndex = fromList [("Doge", 1), ("Sol", 10)]
+
     }
 
 state2 :: State
 state2 =
   State
     { accounts = fromList [("Aki", aki)],
-      pools = fromList [("Test2", test2)]
+      pools = fromList [("Test2", test2)],
+      externalPriceIndex = fromList [("Doge", 1), ("Sol", 10)]
     }

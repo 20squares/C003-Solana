@@ -75,7 +75,8 @@ addLiquidity state accountName poolName assetName amountIn slippage =
                   }
            in State
                 { accounts = insert accountName account' (accounts state),
-                  pools = insert poolName pool' (pools state)
+                  pools = insert poolName pool' (pools state),
+                  externalPriceIndex = externalPriceIndex state
                 }
 
 -- | State transition for removing liquidity from the pool:
@@ -133,7 +134,8 @@ removeLiquidity state accountName poolName assetName lpTokenIn slippage =
                   }
            in State
                 { accounts = insert accountName account' (accounts state),
-                  pools = insert poolName pool' (pools state)
+                  pools = insert poolName pool' (pools state),
+                  externalPriceIndex = externalPriceIndex state
                 }
 
 -- | Token swap state transition
@@ -188,7 +190,8 @@ swap state accountName poolName inputAssetName outputAssetName amountIn slippage
                   }
            in State
                 { accounts = insert accountName account' (accounts state),
-                  pools = insert poolName pool' (pools state)
+                  pools = insert poolName pool' (pools state),
+                  externalPriceIndex = externalPriceIndex state
                 }
 
 -- | Add collateral state transition
@@ -227,7 +230,7 @@ openPosition ::
   State
 openPosition state accountName poolName assetName price collateral size side = undefined
 
--- | Open position state transition
+-- | Close position state transition
 closePosition ::
   State ->
   AccountName ->
@@ -238,7 +241,7 @@ closePosition ::
   State
 closePosition state accountName poolName price = undefined
 
--- | Open position state transition
+-- | Liquidate position state transition
 liquidatePosition ::
   State ->
   AccountName ->
@@ -326,3 +329,13 @@ getPrice assetPrice Short spread =
 -- | Calculate the USD value of total assets under management in the pool
 totalAUM :: Pool -> Price
 totalAUM pool = sum $ fmap (getTokenAUM pool) (keys $ lpAssets pool)
+
+-- | Calculate the USD value of total assets under management in the pool
+accountPayoffUSD :: State -> AccountName -> Price
+accountPayoffUSD state accountName = 
+  let account = accounts state ! accountName
+      index = externalPriceIndex state
+      assetNames = keys index
+      assetQuantity assetName = lookupOrZero assetName (assets account)
+      assetPrice assetName = lookupOrZero assetName (externalPriceIndex state)
+   in sum $ fmap (\a -> assetQuantity a * assetPrice a) assetNames

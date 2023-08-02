@@ -55,7 +55,8 @@ data PricingParams = PricingParams
 -- State type
 data State = State
   { accounts :: Map AccountName Account,
-    pools :: Map PoolName Pool
+    pools :: Map PoolName Pool,
+    externalPriceIndex :: Map AssetName Price
   }
   deriving (Show)
 
