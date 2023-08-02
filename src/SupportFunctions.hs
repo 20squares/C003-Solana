@@ -28,21 +28,21 @@ bpsPower = 10000
 --   pool.assets.token += tokens_in
 --   pool.lp_supply += n
 addLiquidity ::
-  -- | Input state
-  State ->
   -- | Account adding liquidity
   AccountName ->
+  -- | Input state
+  (State
   -- | Target LP
-  PoolName ->
+  , (PoolName
   -- | Asset being added
-  AssetName ->
+  , AssetName
   -- | Amount of asset being added
-  AssetQuantity ->
+  , AssetQuantity
   -- | Slippage / Minimum amount of LP tokens expected
-  AssetQuantity ->
+  , AssetQuantity)) ->
   -- | Updated state
   State
-addLiquidity state accountName poolName assetName amountIn slippage =
+addLiquidity accountName (state, (poolName, assetName, amountIn, slippage)) =
   let pool = pools state ! poolName
       account = accounts state ! accountName
       assetPrice = lookupOrZero assetName (priceIndex pool)

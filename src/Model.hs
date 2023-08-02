@@ -31,8 +31,14 @@ exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove =
     inputs    :  state ;
     feedback  :   ;
     operation :  addLiquidityGame name actionSpaceAdd ;
-    outputs   :  state2 ;
+    outputs   :  addedLiquidity ;
     returns   :  paymentsAdd ;
+
+    inputs    :  state, addedLiquidity ;
+    feedback  :   ;
+    operation :  forwardFunction $ addLiquidity name ;
+    outputs   :  state2 ;
+    returns   :  ;
 
     inputs    :  state, state2 ;
     feedback  :   ;
@@ -54,7 +60,7 @@ exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove =
 
     :---------------------------:
 
-    outputs   :  state3, paymentsAdd,paymentsRemove ;
+    outputs   :  state3, paymentsAdd, paymentsRemove ;
     returns   :   ;
   |]
 
