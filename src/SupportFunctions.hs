@@ -87,21 +87,21 @@ addLiquidity accountName (state, (poolName, assetName, amountIn, slippage)) =
 -- Calculate fee and amount to transfer transfer_amount = remove_amount - fee
 -- Burn lp_token_in LP tokens
 removeLiquidity ::
-  -- | Input state
-  State ->
   -- | Account removing liquidity
   AccountName ->
-  -- | Target LP
-  PoolName ->
+  -- | Input state
+  (State ,
+    -- | Target LP
+  (PoolName ,
   -- | Asset being removed
-  AssetName ->
+  AssetName ,
   -- | Amount of LP tokens being added
-  AssetQuantity ->
+  AssetQuantity ,
   -- | Slippage / Minimum amount of assetName expected
-  AssetQuantity ->
+  AssetQuantity)) ->
   -- | Updated state
   State
-removeLiquidity state accountName poolName assetName lpTokenIn slippage =
+removeLiquidity accountName (state, (poolName, assetName, lpTokenIn, slippage)) =
   let pool = pools state ! poolName
       account = accounts state ! accountName
       assetPrice = lookupOrZero assetName (priceIndex pool)
