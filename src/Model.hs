@@ -20,7 +20,7 @@ By instantiating a initial state, the incentives underlying each individual for 
 
 -- Example game where we add an remove liquidity (and obviously lose money in between)
 -- NOTE: We assume that we keep the prices intact between different states
-exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove stateUpdateMechanism1 stateUpdateMechanism2 payoffsFromState =
+exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove =
   [opengame|
 
     inputs    :  state ;
@@ -31,14 +31,8 @@ exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove stateUpdateMecha
     inputs    :  state ;
     feedback  :   ;
     operation :  addLiquidityGame name actionSpaceAdd ;
-    outputs   :  addedLiquidity ;
-    returns   :  paymentsAdd ;
-
-    inputs    :  state, addedLiquidity ;
-    feedback  :   ;
-    operation :  updateStateGame name stateUpdateMechanism1 ;
     outputs   :  state2 ;
-    returns   :   ;
+    returns   :  paymentsAdd ;
 
     inputs    :  state, state2 ;
     feedback  :   ;
@@ -49,14 +43,8 @@ exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove stateUpdateMecha
     inputs    :  state2 ;
     feedback  :   ;
     operation :  removeLiquidityGame name actionSpaceRemove ;
-    outputs   :  removedLiquidity ;
-    returns   :  paymentsRemove ;
-
-    inputs    :  state2, removedLiquidity ;
-    feedback  :   ;
-    operation :  updateStateGame name stateUpdateMechanism2 ;
     outputs   :  state3 ;
-    returns   :   ;
+    returns   :  paymentsRemove ;
 
     inputs    :  state2, state3 ;
     feedback  :   ;
