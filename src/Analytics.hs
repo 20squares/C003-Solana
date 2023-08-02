@@ -18,12 +18,19 @@ There are two type of analyses:
 --------------------------
 -- 1. Equilibrium checking
 --------------------------
--- Equilibrium notiton for reporter game
+-- Equilibrium notiton for basic example game
 equilibriumExampleAddRemoveLiquidity state name actionSpaceAdd actionSpaceRemove strategy = evaluate (exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove) strategy ctxt
  where
    ctxt = StochasticStatefulContext (pure ((),(state))) (\_ _ -> pure ())
 
 printEquilibriumExampleAddRemoveLiquidity state name actionSpaceAdd actionSpaceRemove strategy = generateIsEq $ equilibriumExampleAddRemoveLiquidity state name actionSpaceAdd actionSpaceRemove strategy
+
+-- Equilibrium notiton for basic example game with private values
+equilibriumExampleAddRemoveLiquidity2 state name actionSpaceAdd actionSpaceRemove factor strategy = evaluate (exampleAddRemoveLiquidity2 name actionSpaceAdd actionSpaceRemove factor) strategy ctxt
+ where
+   ctxt = StochasticStatefulContext (pure ((),(state))) (\_ _ -> pure ())
+
+printEquilibriumExampleAddRemoveLiquidity2 state name actionSpaceAdd actionSpaceRemove factor strategy = generateIsEq $ equilibriumExampleAddRemoveLiquidity2 state name actionSpaceAdd actionSpaceRemove factor strategy
 
 
 -----------------

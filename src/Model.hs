@@ -70,3 +70,61 @@ exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove =
     returns   :   ;
   |]
 
+-- Include an additional private payoff from the tx
+exampleAddRemoveLiquidity2 name actionSpaceAdd actionSpaceRemove factor =
+  [opengame|
+
+    inputs    :  state ;
+    feedback  :   ;
+
+    :---------------------------:
+
+    inputs    :  state ;
+    feedback  :   ;
+    operation :  addLiquidityGame name actionSpaceAdd ;
+    outputs   :  addedLiquidity ;
+    returns   :  paymentsAdd  + paymentsPrivate;
+
+    inputs    :  state, addedLiquidity ;
+    feedback  :   ;
+    operation :  forwardFunction $ addLiquidity name ;
+    outputs   :  state2 ;
+    returns   :  ;
+
+    inputs    :  state, state2 ;
+    feedback  :   ;
+    operation :  computePayments name ;
+    outputs   :  paymentsAdd;
+    returns   :   ;
+
+    inputs    :  state2 ;
+    feedback  :   ;
+    operation :  removeLiquidityGame name actionSpaceRemove ;
+    outputs   :  removedLiquidity ;
+    returns   :  paymentsRemove ;
+
+    inputs    :  state2, removedLiquidity ;
+    feedback  :   ;
+    operation :  forwardFunction $ removeLiquidity name ;
+    outputs   :  state3 ;
+    returns   :  ;
+
+    inputs    :  state2, state3 ;
+    feedback  :   ;
+    operation :  computePayments name ;
+    outputs   :  paymentsRemove ;
+    returns   :   ;
+
+    inputs    :  addedLiquidity ;
+    feedback  :   ;
+    operation :  forwardFunction $ addPrivateValue factor ;
+    outputs   :  paymentsPrivate ;
+    returns   :   ;
+
+
+    :---------------------------:
+
+    outputs   :  state3, paymentsAdd, paymentsRemove ;
+    returns   :   ;
+  |]
+

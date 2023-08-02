@@ -343,3 +343,7 @@ accountPayoffUSD accountName state =
 -- | Compute difference between holdings; just a convenience function
 differenceHoldings :: Price -> Price -> Price
 differenceHoldings = (-)
+
+-- | Add private value for txs
+addPrivateValue :: Price -> (PoolName, AssetName, AssetQuantity, AssetQuantity) -> Price
+addPrivateValue factor (_,_,quantity,_) = factor * quantity
