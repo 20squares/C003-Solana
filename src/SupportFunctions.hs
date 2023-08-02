@@ -330,7 +330,7 @@ getPrice assetPrice Short spread =
 totalAUM :: Pool -> Price
 totalAUM pool = sum $ fmap (getTokenAUM pool) (keys $ lpAssets pool)
 
--- | Calculate the USD value of total assets under management in the pool
+-- | Calculate the USD value of total assets under management for a specific account
 accountPayoffUSD :: State -> AccountName -> Price
 accountPayoffUSD state accountName = 
   let account = accounts state ! accountName
