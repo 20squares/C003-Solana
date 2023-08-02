@@ -19,8 +19,8 @@ By instantiating a initial state, the incentives underlying each individual for 
 
 
 -- Example game where we add an remove liquidity (and obviously lose money in between)
--- TODO add payoffs function
-exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove stateUpdateMechanism1 stateUpdateMechanism2 payoffsFromState exogenousNumeraireT1 exogenousNumeraireT2 =
+-- NOTE: We assume that we keep the prices intact between different states
+exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove stateUpdateMechanism1 stateUpdateMechanism2 payoffsFromState =
   [opengame|
 
     inputs    :  state ;
@@ -42,7 +42,7 @@ exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove stateUpdateMecha
 
     inputs    :  state, state2 ;
     feedback  :   ;
-    operation :  forwardFunction $ payoffsFromState exogenousNumeraireT1 ;
+    operation :  computePayments name ;
     outputs   :  paymentsAdd ;
     returns   :   ;
 
@@ -60,7 +60,7 @@ exampleAddRemoveLiquidity name actionSpaceAdd actionSpaceRemove stateUpdateMecha
 
     inputs    :  state2, state3 ;
     feedback  :   ;
-    operation :  forwardFunction $ payoffsFromState exogenousNumeraireT2 ;
+    operation :  computePayments name ;
     outputs   :  paymentsRemove ;
     returns   :   ;
 

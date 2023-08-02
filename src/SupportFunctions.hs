@@ -331,11 +331,15 @@ totalAUM :: Pool -> Price
 totalAUM pool = sum $ fmap (getTokenAUM pool) (keys $ lpAssets pool)
 
 -- | Calculate the USD value of total assets under management for a specific account
-accountPayoffUSD :: State -> AccountName -> Price
-accountPayoffUSD state accountName = 
+accountPayoffUSD :: AccountName -> State -> Price
+accountPayoffUSD accountName state =
   let account = accounts state ! accountName
       index = externalPriceIndex state
       assetNames = keys index
       assetQuantity assetName = lookupOrZero assetName (assets account)
       assetPrice assetName = lookupOrZero assetName (externalPriceIndex state)
    in sum $ fmap (\a -> assetQuantity a * assetPrice a) assetNames
+
+-- | Compute difference between holdings; just a convenience function
+differenceHoldings :: Price -> Price -> Price
+differenceHoldings = (-)

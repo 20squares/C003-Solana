@@ -33,7 +33,7 @@ data Ratios = Ratios
     minRatio :: Double,
     maxRatio :: Double
   }
-  deriving (Show)
+  deriving (Show, Eq)
 
 -- Fees for trading
 data Fees = Fees
@@ -50,7 +50,7 @@ data Fees = Fees
 data PricingParams = PricingParams
   { swapSpread :: Double
   }
-  deriving (Show)
+  deriving (Show, Eq)
 
 -- State type
 data State = State
@@ -58,7 +58,7 @@ data State = State
     pools :: Map PoolName Pool,
     externalPriceIndex :: Map AssetName Price
   }
-  deriving (Show)
+  deriving (Show, Eq)
 
 -- Account type
 data Account = Account
@@ -71,7 +71,7 @@ data Account = Account
     shortPosition :: Map (PoolName, AssetName) AssetQuantity,
     collateralizedAssets :: Map AssetName AssetQuantity
   }
-  deriving (Show)
+  deriving (Show, Eq)
 
 -- Pool type
 data Pool = Pool
@@ -88,4 +88,4 @@ data Pool = Pool
     -- | Pricing parameters
     pricingParams :: PricingParams
   }
-  deriving (Show)
+  deriving (Show, Eq)

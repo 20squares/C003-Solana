@@ -209,3 +209,36 @@ updateStateGame name stateUpdateMechanism =
     outputs   :  newState ;
     returns   :   ;
   |]
+
+
+-- Compute payments by diffing two states
+computePayments name =
+  [opengame|
+
+    inputs    :  state1, state2 ;
+    feedback  :   ;
+
+    :---------------------------:
+
+    inputs    :  state1 ;
+    feedback  :   ;
+    operation :  forwardFunction $ accountPayoffUSD name;
+    outputs   :  holdingsAtState1 ;
+    returns   :   ;
+
+    inputs    :  state2 ;
+    feedback  :   ;
+    operation :  forwardFunction $ accountPayoffUSD name;
+    outputs   :  holdingsAtState2 ;
+    returns   :   ;
+
+    inputs    :  holdingsAtState2, holdingsAtState1  ;
+    feedback  :   ;
+    operation :  forwardFunction $ uncurry differenceHoldings;
+    outputs   :  payments ;
+    returns   :   ;
+    :---------------------------:
+
+    outputs   :  payments ;
+    returns   :   ;
+  |]
