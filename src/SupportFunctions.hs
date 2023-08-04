@@ -368,3 +368,33 @@ addPrivateValueAddLiquidity factor (_,_,quantity,_) = factor * quantity
 -- | Add private value for swap
 addPrivateValueSwap :: Price -> (PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity) -> Price
 addPrivateValueSwap factor (_,_,_,quantity,_) = factor * quantity
+
+-- | Update pool pricing
+updatePoolPricing :: AssetName -> PoolName -> Double -> State -> State
+updatePoolPricing assetName poolName multiplier state = 
+  let pool = pools state ! poolName
+      newIndex = adjust (* multiplier) assetName (priceIndex pool)
+      newPool = Pool {
+        outstandingSupply = outstandingSupply pool,
+        lpAssets = lpAssets pool,
+        priceIndex = newIndex,
+        assetRatios = assetRatios pool,
+        pricingParams = pricingParams pool,
+        fees = fees pool
+      }
+  in State {
+    accounts = accounts state,
+    pools = insert poolName newPool (pools state),
+    externalPriceIndex = externalPriceIndex state
+  }
+
+
+-- | Update external pricing
+updateExternalPricing :: AssetName -> Double -> State -> State
+updateExternalPricing assetName multiplier state = 
+  let newIndex = adjust (* multiplier) assetName (externalPriceIndex state)
+  in State {
+    accounts = accounts state,
+    pools = pools state,
+    externalPriceIndex = newIndex
+  }
