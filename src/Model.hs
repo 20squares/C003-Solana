@@ -128,3 +128,63 @@ exampleAddRemoveLiquidity2 name actionSpaceAdd actionSpaceRemove factor =
     returns   :   ;
   |]
 
+exampleSwap name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) = [opengame|
+
+    inputs    :  state ;
+    feedback  :   ;
+
+    :---------------------------:
+
+    inputs    :  state ;
+    feedback  :  ;
+    operation :  swapGame name1 actionSpaceSwap1 ;
+    outputs   :  swapped1 ;
+    returns   :  payment1 ;
+
+    inputs    :  state, swapped1 ;
+    feedback  :   ;
+    operation :  forwardFunction $ swapAssets name1 ;
+    outputs   :  state2 ;
+    returns   :  ;
+
+    inputs    :  state, state2 ;
+    feedback  :   ;
+    operation :  computePayments name1 ;
+    outputs   :  payment1 ;
+    returns   :   ;
+
+    inputs    :  state2 ;
+    feedback  :   ;
+    operation :  swapGame name2 actionSpaceSwap2fst ;
+    outputs   :  swapped2 ;
+    returns   :  0 ;
+
+    inputs    :  state2, swapped2 ;
+    feedback  :  ;
+    operation :  forwardFunction $ swapAssets name2 ;
+    outputs   :  state3 ;
+    returns   :  ;
+
+    inputs    :  state3 ;
+    feedback  :  ;
+    operation :  swapGame name2 actionSpaceSwap2snd ;
+    outputs   :  swapped3 ;
+    returns   :  payment4 ;
+
+    inputs    :  state3, swapped3 ;
+    feedback  :  ;
+    operation :  forwardFunction $ swapAssets name2 ;
+    outputs   :  state4 ;
+    returns   :  ;
+
+    inputs    :  state2, state4 ;
+    feedback  :   ;
+    operation :  computePayments name2 ;
+    outputs   :  payment4 ;
+    returns   :   ;
+
+    :---------------------------:
+
+    outputs   :  state4, payment1, payment4 ;
+    returns   :  ;
+  |]

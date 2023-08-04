@@ -137,26 +137,43 @@ removeLiquidity accountName (state, (poolName, assetName, lpTokenIn, slippage)) 
                   pools = insert poolName pool' (pools state),
                   externalPriceIndex = externalPriceIndex state
                 }
+{-
 
--- | Token swap state transition
-swap ::
-  -- | Input state
-  State ->
-  -- | Account removing liquidity
+addLiquidity ::
+  -- | Account adding liquidity
   AccountName ->
+  -- | Input state
+  (State
   -- | Target LP
-  PoolName ->
-  -- | Input asset
-  AssetName ->
-  -- | Output asset
-  AssetName ->
-  -- | Amount of input asset
-  AssetQuantity ->
-  -- | Slippage / Minimum amount of output asset expected
-  AssetQuantity ->
+  , (PoolName
+  -- | Asset being added
+  , AssetName
+  -- | Amount of asset being added
+  , AssetQuantity
+  -- | Slippage / Minimum amount of LP tokens expected
+  , AssetQuantity)) ->
   -- | Updated state
   State
-swap state accountName poolName inputAssetName outputAssetName amountIn slippage =
+-}
+-- | Token swap state transition
+swapAssets ::
+  -- | Account removing liquidity
+  AccountName ->
+  -- | Input state
+  (State
+  -- | Target LP
+  , (PoolName 
+  -- | Input asset
+  , AssetName 
+  -- | Output asset
+  , AssetName 
+  -- | Amount of input asset
+  , AssetQuantity 
+  -- | Slippage / Minimum amount of output asset expected
+  , AssetQuantity)) ->
+  -- | Updated state
+  State
+swapAssets accountName (state, (poolName, inputAssetName, outputAssetName, amountIn, slippage)) =
   let pool = pools state ! poolName
       account = accounts state ! accountName
       inputAssetPrice = lookupOrZero inputAssetName (priceIndex pool)
