@@ -14,5 +14,5 @@ actionSpaceRemoveLiquidity = [("Test", "Sol", 909089.86, 1), ("Test", "Sol", 0, 
 actionSpaceSwap :: [(PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity)]
 actionSpaceSwap = [("Pool1", "Sol", "Doge", 10000000, 0), ("Test", "Sol", "Doge", 0, 100)]
 
-actionSpaceArb :: [((PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity), (PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity))]
-actionSpaceArb = [(("Pool1", "Doge", "Sol", 100000000, 0), ("Pool2", "Sol", "Doge", 10000000, 0))]
+actionSpaceArb :: ([(PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity)], [(PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity)])
+actionSpaceArb = ([("Pool1", "Doge", "Sol", 100000000, 0), ("Test", "Sol", "Doge", 0, 100)], [("Pool2", "Sol", "Doge", 10000000, 0), ("Test", "Sol", "Doge", 0, 100)])
