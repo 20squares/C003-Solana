@@ -11,7 +11,7 @@ testStrategy3 = strategyTupleSwap ("Pool1", "Sol", "Doge", 10000000, 0) ("Test",
   
 
 main = do
-  printEquilibriumExampleAddRemoveLiquidity state1 "Aki" (const actionSpaceAddLiquidity) (const actionSpaceRemoveLiquidity) testStrategy1
-  printEquilibriumExampleAddRemoveLiquidity2 state1 "Aki" (const actionSpaceAddLiquidity) (const actionSpaceRemoveLiquidity) 8 testStrategy1
-  printEquilibriumExampleSwap state3 "Aki" "Bogdan" "Pool1" "Pool2" actionSpaceSwap actionSpaceArb testStrategy3
- -- printEquilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy
+  -- printEquilibriumExampleAddRemoveLiquidity state1 "Aki" (const actionSpaceAddLiquidity) (const actionSpaceRemoveLiquidity) testStrategy1
+  -- printEquilibriumExampleAddRemoveLiquidity2 state1 "Aki" (const actionSpaceAddLiquidity) (const actionSpaceRemoveLiquidity) 8 testStrategy1
+  printEquilibriumExampleSwap state3 "Aki" "Bogdan" "Pool1" "Pool2" (const actionSpaceSwap) (const $ fst actionSpaceArb, const $ snd actionSpaceArb) testStrategy3
+  -- printEquilibriumExampleSwapExogenousPriceChange state3 "Aki" "Bogdan" "Pool1" "Pool2" (const actionSpaceSwap) (const $ fst actionSpaceArb, const $ snd actionSpaceArb) 8 "Sol" 1.2 testStrategy3
