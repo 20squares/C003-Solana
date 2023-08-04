@@ -362,5 +362,9 @@ differenceHoldings :: Price -> Price -> Price
 differenceHoldings = (-)
 
 -- | Add private value for txs
-addPrivateValue :: Price -> (PoolName, AssetName, AssetQuantity, AssetQuantity) -> Price
-addPrivateValue factor (_,_,quantity,_) = factor * quantity
+addPrivateValueAddLiquidity :: Price -> (PoolName, AssetName, AssetQuantity, AssetQuantity) -> Price
+addPrivateValueAddLiquidity factor (_,_,quantity,_) = factor * quantity
+
+-- | Add private value for swap
+addPrivateValueSwap :: Price -> (PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity) -> Price
+addPrivateValueSwap factor (_,_,_,quantity,_) = factor * quantity
