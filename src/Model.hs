@@ -208,7 +208,7 @@ exampleSwapExogenousPriceChange name1 name2 poolName1 poolName2 actionSpaceSwap1
     outputs   :  state2 ;
     returns   :  ;
 
-    inputs    :  state ;
+    inputs    :  state2 ;
     feedback  :   ;
     operation :  forwardFunction $ updatePoolPricing assetName poolName1 priceChange1 ;
     outputs   :  state22 ;
