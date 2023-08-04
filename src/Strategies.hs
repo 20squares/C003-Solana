@@ -33,8 +33,28 @@ removeLiquidityStrategy ::
 removeLiquidityStrategy parameter =
   pureAction parameter
 
--- | Strategy tuple
-strategyTuple addParameter removeParameter =
+-- | Do a swap
+swapStrategy ::
+  (PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity) ->
+  Kleisli
+     Stochastic
+     State
+     (PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity)
+swapStrategy parameter =
+  pureAction parameter
+
+
+
+
+-- | Strategy tuple for adding/removing liquidity
+strategyTupleAddRemoveLiquidity addParameter removeParameter =
   addLiquidityStrategy addParameter
   ::- removeLiquidityStrategy removeParameter
+  ::- Nil
+
+-- | Strategy tuple for swaps
+strategyTupleSwap swap1Par swap2Par swap3Par =
+  swapStrategy swap1Par
+  ::- swapStrategy swap2Par
+  ::- swapStrategy swap3Par
   ::- Nil

@@ -40,11 +40,11 @@ equilibriumExampleSwap state name1 name2 poolName1 poolName2 actionSpaceSwap1 (a
 printEquilibriumExampleSwap state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) strategy = generateIsEq $ equilibriumExampleSwap state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) strategy
 
 -- Equilibrium notion for basic swap example game with private value and exogenous price update
-equilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) strategy = evaluate (exampleSwap name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd)) strategy ctxt
+equilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy = evaluate (exampleSwapExogenousPriceChange name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1) strategy ctxt
  where
    ctxt = StochasticStatefulContext (pure ((),(state))) (\_ _ -> pure ())
 
-printEquilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy = generateIsEq $ equilibriumExampleSwap state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy
+printEquilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy = generateIsEq $ equilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy
 
 
 -----------------
