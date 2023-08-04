@@ -44,7 +44,7 @@ equilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2
  where
    ctxt = StochasticStatefulContext (pure ((),(state))) (\_ _ -> pure ())
 
-printEquilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy = generateIsEq $ equilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy
+printEquilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy = generateOutput $ equilibriumExampleSwapExogenousPriceChange state name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 strategy
 
 
 -----------------

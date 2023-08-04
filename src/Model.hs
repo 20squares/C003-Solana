@@ -200,7 +200,7 @@ exampleSwapExogenousPriceChange name1 name2 poolName1 poolName2 actionSpaceSwap1
     feedback  :  ;
     operation :  swapGame name1 actionSpaceSwap1 ;
     outputs   :  swapped1 ;
-    returns   :  payment1 ;
+    returns   :  payment1 + paymentsPrivate ;
 
     inputs    :  state, swapped1 ;
     feedback  :   ;
