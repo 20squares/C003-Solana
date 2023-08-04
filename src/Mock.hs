@@ -139,3 +139,9 @@ arbTest = let
   step2 = swapAssets "Bogdan" (step1, ("Pool1", "Doge", "Sol", 100000000, 0))
   step3 = swapAssets "Bogdan" (step2, ("Pool2", "Sol", "Doge", 10000000, 0))
   in step3
+
+arbTest2 = let
+  step1 = swapAssets "Aki" (state3, ("Pool1", "Sol", "Doge", 10000000, 0))
+  step2 = swapAssets "Bogdan" (step1, ("Pool2", "Sol", "Doge", 10000000, 0))
+  step3 = swapAssets "Bogdan" (step2, ("Pool2", "Sol", "Doge", 10000000, 0))
+  in step3
