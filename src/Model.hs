@@ -189,7 +189,7 @@ exampleSwap name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fs
     returns   :  ;
   |]
 
-exampleSwapExogenousPriceChange name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor updatePoolPricing assetName priceChange1 = [opengame|
+exampleSwapExogenousPriceChange name1 name2 poolName1 poolName2 actionSpaceSwap1 (actionSpaceSwap2fst, actionSpaceSwap2snd) factor assetName priceChange1 = [opengame|
 
     inputs    :  state ;
     feedback  :   ;
