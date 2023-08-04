@@ -176,6 +176,7 @@ swapAssets ::
 swapAssets accountName (state, (poolName, inputAssetName, outputAssetName, amountIn, slippage)) =
   let pool = pools state ! poolName
       account = accounts state ! accountName
+      ownedInAssetAccount = lookupOrZero inputAssetName (assets account)
       inputAssetPrice = lookupOrZero inputAssetName (priceIndex pool)
       outputAssetPrice = lookupOrZero outputAssetName (priceIndex pool)
       ownedOutAssetLP = lpAssets pool ! outputAssetName
@@ -185,7 +186,7 @@ swapAssets accountName (state, (poolName, inputAssetName, outputAssetName, amoun
       swapAmount = amountIn * swapPrice
       fee = getFee pool inputAssetName amountIn (swapFee $ fees pool)
       tokensOut = swapAmount - fee
-   in if tokensOut < slippage || ownedOutAssetLP < tokensOut
+   in if ownedInAssetAccount < amountIn || tokensOut < slippage || ownedOutAssetLP < tokensOut
         then state
         else
           let account' =
