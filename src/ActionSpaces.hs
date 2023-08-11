@@ -1,7 +1,7 @@
 module ActionSpaces where
 
 import Types
-import Mock
+import Parameterization
 
 {-
 Describes the action space that the players have access to

@@ -28,7 +28,6 @@ library
       ActionSpaces
       Analytics
       Components
-      Mock
       Model
       Parameterization
       Payoffs
