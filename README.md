@@ -31,7 +31,11 @@
 
 
 # Summary
-In this work, we modelled some of the basic functionality of
+In this work, we modelled some of the basic functionality of the code provided [here](https://github.com/askibin/perpetuals/tree/master/programs/perpetuals/src). This code details a GMX-style perpetual exchange for the Solana ecosystem.
+
+Most notably, the codebase specifies routines to add and remove liquidity, to swap assets, and to open, close and liquidate positions expressed in the form of perpetuals. The codebase also implements methods to both compute payments related to the futures (which can be positive or negative depending on the market) and the fees that users have to pay to use the various protocol functionalities.
+
+In this work, we modelled part of the protocol in our software and ran some basic analysis.
 
 
 ## Analytics results
