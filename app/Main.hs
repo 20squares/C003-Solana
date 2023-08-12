@@ -1,5 +1,7 @@
 module Main where
 
+import Data.Bifunctor
+
 import ActionSpaces
 import Analytics
 import Parameterization
@@ -16,5 +18,4 @@ main = do
   -- printEquilibriumExampleAddRemoveLiquidity state1 "Aki" (const actionSpaceAddLiquidity) (const actionSpaceRemoveLiquidity) testStrategy1
   printEquilibriumExampleAddRemoveLiquidity2 state1 "Aki" (const actionSpaceAddLiquidity) (const actionSpaceRemoveLiquidity) 3.965 testStrategy1
   -- printEquilibriumExampleSwap state3 "Aki" "Bogdan" "Pool1" "Pool2" (const actionSpaceSwap) (const $ fst actionSpaceArb, const $ snd actionSpaceArb) testStrategy3
-  -- printEquilibriumExampleSwapExogenousPriceChange state3 "Aki" "Bogdan" "Pool1" "Pool2" (const actionSpaceSwap) (const $ fst actionSpaceArb, const $ snd actionSpaceArb) 8 "Sol" 0.9 testStrategy3
-  
+  printEquilibriumExampleSwapExogenousPriceChange state3 "Aki" "Bogdan" "Pool1" "Pool2" (const actionSpaceSwap) (bimap const const actionSpaceArb) 8 "Sol" 0.9 testStrategy3

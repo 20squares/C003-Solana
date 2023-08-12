@@ -1,14 +1,13 @@
 module Parameterization where
 
-import Data.Map.Strict
 import Types
+import Data.Map.Strict
 import SupportFunctions
 
 {-
 Defines the main parameterizations used in the analysis
 -}
 
--- TEST IMPLEMENTATION
 aki :: Account
 aki =
   Account
@@ -136,14 +135,18 @@ state3 =
       externalPriceIndex = fromList [("Doge", 1), ("Sol", 10)]
     }
 
+swapTest :: State
 swapTest = swapAssets "Aki" (state1, ("Test", "Sol", "Doge", 10, 0))
 
+arbTest :: State
 arbTest = let
   step1 = swapAssets "Aki" (state3, ("Pool1", "Sol", "Doge", 10000000, 0))
   step2 = swapAssets "Bogdan" (step1, ("Pool1", "Doge", "Sol", 100000000, 0))
   step3 = swapAssets "Bogdan" (step2, ("Pool2", "Sol", "Doge", 10000000, 0))
   in step3
 
+
+arbTest2 :: State
 arbTest2 = let
   step1 = swapAssets "Aki" (state3, ("Pool1", "Sol", "Doge", 10000000, 0))
   step2 = swapAssets "Bogdan" (step1, ("Pool2", "Sol", "Doge", 10000000, 0))
