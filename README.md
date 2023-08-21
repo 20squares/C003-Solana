@@ -11,9 +11,6 @@
           - [Freeing space](#freeing-space)
         - [Installing through GHCup](#installing-through-ghcup)
 - [Explaining the model](#explaining-the-model)
-
-    - [Assumptions made explicit](#assumptions-made-explicit)
-
 - [Code deep dive](#code-deep-dive)
     - [Recap: DSL primer](#recap-dsl-primer)
         - [The building blocks](#the-building-blocks)
@@ -30,19 +27,22 @@
     - [Reading the analytics](#reading-the-analytics)
     - [Running the analytics](#running-the-analytics)
     - [Main findings](#main-findings)
-      - [Other analyses](#other-analyses)
-      - [Sanity checks](#sanity-checks)
 
 
 
 # Summary
-[TODO]
+In this work, we modelled some of the basic functionality of the code provided [here](https://github.com/askibin/perpetuals/tree/master/programs/perpetuals/src). This code details a GMX-style perpetual exchange for the Solana ecosystem.
+
+Most notably, the codebase specifies routines to add and remove liquidity, to swap assets, and to open, close and liquidate positions expressed in the form of perpetuals. The codebase also implements methods to both compute payments related to the futures (which can be positive or negative depending on the market) and the fees that users have to pay to use the various protocol functionalities.
+
+In this work, we modelled part of the protocol in our software and ran some basic analysis.
 
 
 ## Analytics results
-[TODO]
+The analytics we implemented are very basic, and should be considered little more than sanity checks. They showed that:
 
-
+- Users have no interest in adding and immediately removing liquidity if they do not gain some exogenous payoff from this action. This means that bundling add/remove liquidity transactions to emulate [JIT liquidity](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4382303) is not going to be profitable if the surrounding context does not provide a payoff that depends strictly on this action.
+- Profiting from arbitraging swaps is in principle possible. This is not surprising.
 
 # Installation
 To run the model, it is necessary to have `haskell` and `stack` installed on your machine. Refer to the subsection [Addendum: Installing haskell](#addendum-installing-haskell) for instructions. A deeper dive into the code structure can be found in the [Code deep dive](#code-deep-dive) subsection.
@@ -170,13 +170,15 @@ The main way to avoid this is by using the recommended installation via [`nix`](
 # Explaining the model
 Here we give a more detailed explanation of what our model does.
 
-[TODO]
+The model implements the functions to add/remove liquidity and to swap assets, as provided in the [codebase](https://github.com/askibin/perpetuals/tree/master/programs/perpetuals/src). These games can be used without any problem. These games are defined in `Components.hs` (see [File structure](#file-structure) for more information).
 
+We defined games also to open, close and liquidate positions, and to deposit or withdraw collateral. At the moment, these games are placeholders of the correct signatures, but the needed functions to complete their implementation have yet to be ported from the original codebase. This is work was not included in our work package, and can be carried out in-house or by us in a subsequent Work Package. Again, these games are defined in `Components.hs`
 
-## Assumptions made explicit
-[TODO]
+Finally, we provided some example games made by assemblig the basic building blocks we created. These games are contained in `Model.hs`. They include:
 
-
+- A game where liquidity is added and immediately removed
+- A game as above, but where the player also receives some exogenous payoff in performing this action
+- Two simple games to model arbitrages between two different pools.
 
 # Code deep dive
 
@@ -356,7 +358,7 @@ The code proper is contained in the `src` folder:
 - `ActionSpace.hs` is mainly needed for technical type-transformations. It maps a player's decision type into the type needed to be fed in the subsequent game.
 - `Analytics.hs` defines the equilibrium notion for each game we want to test.
 - `Components.hs` is where the subgames making up the whole model are defined.
-- `Model.hs` is the file where the subgames are assembled and the main model is defined.
+- `Model.hs` is the file where the subgames are assembled and the main example games are defined.
 - `Parametrization.hs` defines the concrete parametrizations used for the analysis. This comprises all the parameters defining the initial state of the model, as for instance may be players' initial endowments, weights in a payoff matrix, fixed costs to perform some operations, etc.
 - `Payoffs.hs` is where the payoff functions used in every (sub)game are defined. We decided to keep them all in the same file to make tweaking and fine-tuning less dispersive.
 - `Strategies.hs` is where the strategies we want to test are defined.
@@ -412,7 +414,59 @@ Observable State:
 
 
 ## Strategies employed in the analysis
-[TODO]
+We implemented some very basic strategies to add/remove liquidity and to swap. These strategies are completely determistic.
+
+```haskell
+
+-- | Added a parameterized asset
+addLiquidityStrategy ::
+  (PoolName, AssetName, AssetQuantity, AssetQuantity) ->
+  Kleisli
+     Stochastic
+     State
+     (PoolName, AssetName, AssetQuantity, AssetQuantity)
+addLiquidityStrategy parameter =
+  pureAction parameter
+
+-- | Remove a parameterized asset
+removeLiquidityStrategy ::
+  (PoolName, AssetName, AssetQuantity, AssetQuantity) ->
+  Kleisli
+     Stochastic
+     State
+     (PoolName, AssetName, AssetQuantity, AssetQuantity)
+removeLiquidityStrategy parameter =
+  pureAction parameter
+
+-- | Do a swap
+swapStrategy ::
+  (PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity) ->
+  Kleisli
+     Stochastic
+     State
+     (PoolName, AssetName, AssetName, AssetQuantity, AssetQuantity)
+swapStrategy parameter =
+  pureAction parameter
+
+```
+
+Moreover, we assembled these strategies into tuples for the examples games we implemented. These strategies consists in adding and then removing liquidity, and in making a series of three different swaps.
+
+```haskell
+-- | Strategy tuple for adding/removing liquidity
+strategyTupleAddRemoveLiquidity addParameter removeParameter =
+  addLiquidityStrategy addParameter
+  ::- removeLiquidityStrategy removeParameter
+  ::- Nil
+
+-- | Strategy tuple for swaps
+strategyTupleSwap swap1Par swap2Par swap3Par =
+  swapStrategy swap1Par
+  ::- swapStrategy swap2Par
+  ::- swapStrategy swap3Par
+  ::- Nil
+```
+
 
 As detailed in [File structure](#file-structure), the strategies above reside in `Strategies.hs`. For more information about how to supply strategies and/or how to make changes, please refer to the section [Supplying Strategies](#supplying-strategies).
 
@@ -430,10 +484,14 @@ In particular, calling the function `main` in interactive mode will result in th
 
 
 ## Main findings
-[TODO]
 
-### Other analyses
-[TODO]
+As we said in the introduction, the analytics we implemented are very basic. Besides the obvious finding that in the case of multiple, unbalanced pools arbitraging swap strategies become profitable, we experimented with strategies that involved the provision of liquidity immediately followed by its removal. As the mechanism is defined now, this is not a profitable strategy. 
 
-### Sanity checks
-[TODO]
+Yet, adding and removing liquidity can become profitable if the agent receives some extrinsic payoff from this action. We modelled this payoff as a quantity depending on the amount of provided scaled by some factor. The relevant function taking care of this is the following, and it is defined in `SupportFunctions.hs` (see [File structure](#file-structure) for more information):
+
+```haskell
+addPrivateValueAddLiquidity :: Price -> (PoolName, AssetName, AssetQuantity, AssetQuantity) -> Price
+addPrivateValueAddLiquidity factor (_,_,quantity,_) = factor * quantity
+```
+
+With the current fee structure, we found out that adding and removing liquidity becomes profitable with a factor circa greater than `3.965`. This gives a rough estimate on how much an agent needs to make if they want to use immediate adding and removing of liquidity in some broader MEV-related strategy (as in a context similar to [JIT liquidity](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4382303), for instance).
